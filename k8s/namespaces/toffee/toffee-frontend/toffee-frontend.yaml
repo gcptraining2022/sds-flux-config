@@ -18,3 +18,10 @@ spec:
       ingressHost: toffee.{{ .Values.global.environment }}.platform.hmcts.net
       environment:
         RECIPE_BACKEND_URL: toffee.{{ .Values.global.environment }}-backend.platform.hmcts.net
+    volumes:
+      - name: azurekeyvault
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: "default-cert"
