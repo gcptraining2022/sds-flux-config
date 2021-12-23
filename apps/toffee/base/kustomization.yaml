@@ -5,5 +5,4 @@ resources:
   - ../frontend/toffee-frontend.yaml
   - ../recipe-backend/toffee-recipe-backend.yaml
   - ../identity/toffee-azure-identity.yaml
-  - ../identity/apple-azure-identity.yaml
 namespace: toffee
