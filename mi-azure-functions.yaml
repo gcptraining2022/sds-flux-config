@@ -1,0 +1,33 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: mi-azure-functions-deployment-resource
+  namespace: mi
+  annotations:
+    fluxcd.io/automated: "true"
+    repository.fluxcd.io/chart-image: image
+    filter.fluxcd.io/chart-image: glob:dev-*
+spec:
+  releaseName: mi-azure-functions-resource
+  chart:
+    git: git@github.com:hmcts/sds-flux-config
+    path: k8s/release/mi/mi-azure-functions-resource
+    ref: test-resource-limit-dev
+  values:
+    labels:
+      app.kubernetes.io/instance: mi-azure-functions-deployment-resource
+      app.kubernetes.io/name: mi-azure-functions-deployment-resource
+    image: sdshmctspublic.azurecr.io/mi/azure-functions:dev-61b85ef-20220328124233
+    env:
+      ADF_RESOURCEGROUP: mi-dev-rg
+      ADF_NAME: mi-ingestion-adf-dev
+      ADF_STORAGEACCOUNTNAME: miauditcev
+      MI_METADATA_SERVER_DB: mi-metadata-db-dev
+    keyVaultSecrets:
+    - encryption-publicKey
+    environment: "dev"
+    resourceGroup: "mi-dev-rg"
+    subscriptionId: "867a878b-cb68-4de5-9741-361ac9e178b6"
+    tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+    managedIdentityClientId: "ac07f3c3-de8b-4df7-ad08-7ca2db07e220"
