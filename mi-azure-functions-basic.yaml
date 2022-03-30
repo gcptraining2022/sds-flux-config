@@ -1,0 +1,35 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: mi-azure-functions-deployment-basic
+  namespace: mi
+  annotations:
+    fluxcd.io/automated: "true"
+    repository.fluxcd.io/chart-image: image
+    filter.fluxcd.io/chart-image: glob:test-*
+spec:
+  releaseName: mi-azure-functions-basic
+  chart:
+    git: git@github.com:hmcts/sds-flux-config
+    path: k8s/release/mi/mi-azure-functions-basic
+    ref: test-basic-container
+  values:
+    labels:
+      app.kubernetes.io/instance: mi-azure-functions-deployment-basic
+      app.kubernetes.io/name: mi-azure-functions-deployment-basic
+    image: sdshmctspublic.azurecr.io/mi/azure-functions:test-65568e0-20220330015406
+    env:
+      ADF_RESOURCEGROUP: mi-test-rg
+      ADF_NAME: mi-ingestion-adf-test
+      ADF_STORAGEACCOUNTNAME: miaudittest
+      MI_METADATA_SERVER_DB: mi-metadata-db-test
+    keyVaultSecrets:
+    - encryption-publicKey
+    environment: "test"
+    resourceGroup: "mi-test-rg"
+    subscriptionId: "3eec5bde-7feb-4566-bfb6-805df6e10b90"
+    tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+    managedIdentityClientId: "4531cfbf-c944-4025-bcac-9126016baa4c"
+    memoryLimits: '2048Mi'
+    cpuLimits: '2000m'
