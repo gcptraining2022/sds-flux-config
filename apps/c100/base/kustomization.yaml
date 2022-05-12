@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - ../../base
   - ../c100_app
-namespace: monitoring
+namespace: c100
